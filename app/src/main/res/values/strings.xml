@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MercadoPago-Ejercicio</string>
+    <string name="step1_hint_amount">Ingrese monto</string>
+    <string name="step1_button_next">Siguiente</string>
+</resources>
