@@ -3,14 +3,11 @@ package com.angiearlanti.mercadopago_ejercicio;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.angiearlanti.mercadopago_ejercicio.Utils.StepsUtils;
-
-import java.math.BigDecimal;
+import com.angiearlanti.mercadopago_ejercicio.utils.StepsUtils;
 
 public class Step1Activity extends AppCompatActivity {
 
@@ -22,7 +19,6 @@ public class Step1Activity extends AppCompatActivity {
 
         final Button button = (Button) findViewById(R.id.step1_next_button);
         final EditText editText = (EditText) findViewById(R.id.step1_editText);
-
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,8 +32,6 @@ public class Step1Activity extends AppCompatActivity {
                 intent.putExtra(StepsUtils.AMOUNT,amount);
 
                 startActivityForResult(intent,StepsUtils.SELECTED_VALUES_REQUEST_CODE);
-
-
 
             }
         });
