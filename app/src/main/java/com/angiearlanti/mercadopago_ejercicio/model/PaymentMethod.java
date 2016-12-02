@@ -12,6 +12,7 @@ public class PaymentMethod {
     private String payment_type_id;
     private String status;
     private String secure_thumbnail;
+    private String thumbnail;
     private String deferred_capture;
     private List<Setting> settings;
     private List<String> additional_info_needed;
@@ -19,12 +20,13 @@ public class PaymentMethod {
     private Number max_allowed_amount;
     private Number accreditation_time;
 
-    public PaymentMethod(String id, String name, String payment_type_id, String status, String secure_thumbnail, String deferred_capture, List<Setting> settings, List<String> additional_info_needed, Number min_allowed_amount, Number max_allowed_amount, Number accreditation_time) {
+    public PaymentMethod(String id, String name, String payment_type_id, String status, String secure_thumbnail, String deferred_capture, List<Setting> settings, List<String> additional_info_needed, Number min_allowed_amount, Number max_allowed_amount, Number accreditation_time,String thumbnail) {
         this.id = id;
         this.name = name;
         this.payment_type_id = payment_type_id;
         this.status = status;
         this.secure_thumbnail = secure_thumbnail;
+        this.thumbnail = thumbnail;
         this.deferred_capture = deferred_capture;
         this.settings = settings;
         this.additional_info_needed = additional_info_needed;
@@ -71,6 +73,14 @@ public class PaymentMethod {
 
     public void setSecure_thumbnail(String secure_thumbnail) {
         this.secure_thumbnail = secure_thumbnail;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     public String getDeferred_capture() {

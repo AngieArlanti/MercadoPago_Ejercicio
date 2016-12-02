@@ -6,10 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.angiearlanti.mercadopago_ejercicio.R;
+import com.angiearlanti.mercadopago_ejercicio.async_task.DownloadImageAsyncTask;
 import com.angiearlanti.mercadopago_ejercicio.model.PaymentMethod;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -35,21 +38,19 @@ public class PaymentMethodArrayAdapter extends ArrayAdapter<PaymentMethod> {
 
         View rowView = inflater.inflate(R.layout.list_view_item_step2, parent, false);
 
-        /*Pongo la misma imagen para cada producto. Pero tienen que poner
-         la imagen correspondiente a cada producto.
-          */
-        /*ImageView imageView = (ImageView)rowView.findViewById(R.id.icon);
-        String nombre_imagen = objects[position].getName();
+        PaymentMethod pm = objects.get(position);
 
-        int imageId = context.getResources().getIdentifier(nombre_imagen.toLowerCase(Locale.getDefault()),
-                "drawable", context.getPackageName());
+        String url = pm.getThumbnail();
+
+        ImageView imageView = (ImageView) rowView.findViewById(R.id.step2_icon);
+
+        //new DownloadImageAsyncTask(imageView).execute(url);
+        Picasso.with(context).load(url).into(imageView);
+
+        TextView nameTextView = (TextView)rowView.findViewById(R.id.step2_name);
+        nameTextView.setText(pm.getName());
 
 
-
-        imageView.setImageResource(imageId);
-*/
-        TextView nameTextView = (TextView)rowView.findViewById(R.id.name);
-        nameTextView.setText((objects.get(position)).getName());
 
 
         return rowView;

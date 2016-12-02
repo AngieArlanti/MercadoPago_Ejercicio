@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.angiearlanti.mercadopago_ejercicio.adapter.PaymentMethodArrayAdapter;
+import com.angiearlanti.mercadopago_ejercicio.async_task.PaymentMethodsAsyncTask;
 import com.angiearlanti.mercadopago_ejercicio.model.PaymentMethod;
 import com.angiearlanti.mercadopago_ejercicio.service.MercadoPagoService;
 import com.angiearlanti.mercadopago_ejercicio.utils.StepsUtils;
@@ -40,69 +41,16 @@ public class Step2Activity extends AppCompatActivity {
 
         Intent selectedValuesIntent = getIntent();
 
-        //List<PaymentMethod> paymentMethodList = getPaymentMethods();
-        new getPaymentMethods().execute();
+        //new PaymentMethodsAsyncTask(this).execute();
+
+        PaymentMethodsAsyncTask pm = new PaymentMethodsAsyncTask(this);
+
+        pm.getPaymentMethods();
 
 
 
     }
 
-    private class getPaymentMethods extends AsyncTask<String, Void, List<PaymentMethod>>{
-
-        private List<PaymentMethod> list =null;
-        @Override
-        protected List<PaymentMethod> doInBackground(String... params){
-
-            try{
-
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("https://api.mercadopago.com/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-
-                MercadoPagoService service = retrofit.create(MercadoPagoService.class);
-
-                Call<List<PaymentMethod>> saludo = service.getPaymentMethods(StepsUtils.PUBLIC_KEY);
-
-                saludo.enqueue(new Callback<List<PaymentMethod>>() {
-                    @Override
-                    public void onResponse(Call<List<PaymentMethod>> call, Response<List<PaymentMethod>> response) {
-                        if (response.isSuccessful()) {
-                            Log.v("Step2Activity","isSuccessful");
-                            //TODO publishProgress ir completando la lista
-                            ListView listView = (ListView) Step2Activity.this.findViewById(R.id.step2_listView);
-                            PaymentMethodArrayAdapter adapter = new PaymentMethodArrayAdapter(Step2Activity.this, response.body());
-
-                            adapter.notifyDataSetChanged();
-
-                            listView.setAdapter(adapter);
-
-                        } else {
-                            //puedo tener 404 o 500
-                            Log.v("Step2Activity","notSuccessful");
-
-                        }
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<PaymentMethod>> call, Throwable t) {
-                        Log.v("Step2Activity","onFailure");
-                        t.printStackTrace();
-                    }
-                });
-
-            }
-            catch(Exception e){
-                e.printStackTrace();
-
-                return null;
-            }
-            return list;
-        }
-
-
-    }
 
 
     @Override
