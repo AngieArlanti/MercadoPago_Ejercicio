@@ -1,6 +1,7 @@
 package com.angiearlanti.mercadopago_ejercicio;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,42 +37,53 @@ public class Step2Activity extends AppCompatActivity {
         Intent selectedValuesIntent = getIntent();
 
         //List<PaymentMethod> paymentMethodList = getPaymentMethods();
-        getPaymentMethods();
+        new getPaymentMethods().execute();
 
     }
 
-    private void getPaymentMethods() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.mercadopago.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+    private class getPaymentMethods extends AsyncTask<String, Void, String>{
+        @Override
+        protected String doInBackground(String... params){
+            try{
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("https://api.mercadopago.com/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
 
-        MercadoPagoService service = retrofit.create(MercadoPagoService.class);
+                MercadoPagoService service = retrofit.create(MercadoPagoService.class);
 
-        Call<List<PaymentMethod>> saludo = service.getPaymentMethods(StepsUtils.PUBLIC_KEY);
+                Call<List<PaymentMethod>> saludo = service.getPaymentMethods(StepsUtils.PUBLIC_KEY);
 
-        saludo.enqueue(new Callback<List<PaymentMethod>>() {
-            @Override
-            public void onResponse(Call<List<PaymentMethod>> call, Response<List<PaymentMethod>> response) {
-                if (response.isSuccessful()) {
-                    Log.v("Step2Activity","isSuccessful");
-                    TextView textView = (TextView) findViewById(R.id.textView);
-                    textView.setText(response.body().get(0).getName());
+                saludo.enqueue(new Callback<List<PaymentMethod>>() {
+                    @Override
+                    public void onResponse(Call<List<PaymentMethod>> call, Response<List<PaymentMethod>> response) {
+                        if (response.isSuccessful()) {
+                            Log.v("Step2Activity","isSuccessful");
+                            TextView textView = (TextView) findViewById(R.id.textView);
+                            textView.setText(response.body().get(0).getName());
 
-                } else {
-                    //puedo tener 404 o 500
-                    Log.v("Step2Activity","notSuccessful");
+                        } else {
+                            //puedo tener 404 o 500
+                            Log.v("Step2Activity","notSuccessful");
 
-                }
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<PaymentMethod>> call, Throwable t) {
+                        Log.v("Step2Activity","onFailure");
+                        t.printStackTrace();
+                    }
+                });
 
             }
-
-            @Override
-            public void onFailure(Call<List<PaymentMethod>> call, Throwable t) {
-                Log.v("Step2Activity","onFailure");
+            catch(Exception e){
+                e.printStackTrace();
+                return "failure";
             }
-        });
-
+            return "success";
+        }
 
     }
 

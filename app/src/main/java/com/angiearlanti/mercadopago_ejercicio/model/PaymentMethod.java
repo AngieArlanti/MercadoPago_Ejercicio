@@ -13,13 +13,13 @@ public class PaymentMethod {
     private String status;
     private String secure_thumbnail;
     private String deferred_capture;
-    private Settings settings;
+    private List<Setting> settings;
     private List<String> additional_info_needed;
     private Number min_allowed_amount;
     private Number max_allowed_amount;
     private Number accreditation_time;
 
-    public PaymentMethod(String id, String name, String payment_type_id, String status, String secure_thumbnail, String deferred_capture, Settings settings, List<String> additional_info_needed, Number min_allowed_amount, Number max_allowed_amount, Number accreditation_time) {
+    public PaymentMethod(String id, String name, String payment_type_id, String status, String secure_thumbnail, String deferred_capture, List<Setting> settings, List<String> additional_info_needed, Number min_allowed_amount, Number max_allowed_amount, Number accreditation_time) {
         this.id = id;
         this.name = name;
         this.payment_type_id = payment_type_id;
@@ -81,11 +81,11 @@ public class PaymentMethod {
         this.deferred_capture = deferred_capture;
     }
 
-    public Settings getSettings() {
+    public List<Setting> getSettings() {
         return settings;
     }
 
-    public void setSettings(Settings settings) {
+    public void setSetting(List<Setting> settings) {
         this.settings = settings;
     }
 
