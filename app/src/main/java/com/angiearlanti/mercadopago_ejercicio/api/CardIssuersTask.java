@@ -6,9 +6,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.angiearlanti.mercadopago_ejercicio.R;
 import com.angiearlanti.mercadopago_ejercicio.Step3Activity;
+import com.angiearlanti.mercadopago_ejercicio.Step4Activity;
 import com.angiearlanti.mercadopago_ejercicio.adapter.CardIssuerArrayAdapter;
 import com.angiearlanti.mercadopago_ejercicio.adapter.PaymentMethodArrayAdapter;
 import com.angiearlanti.mercadopago_ejercicio.model.CardIssuer;
@@ -47,7 +49,7 @@ public class CardIssuersTask {
 
         MercadoPagoService service = retrofit.create(MercadoPagoService.class);
 
-        String paymentMethodId = context.getIntent().getStringExtra(StepsUtils.PAYMENT_METHOD_ID);
+        final String paymentMethodId = context.getIntent().getStringExtra(StepsUtils.PAYMENT_METHOD_ID);
 
         Log.v("Step3Activity-Intent",paymentMethodId);
 
@@ -60,16 +62,20 @@ public class CardIssuersTask {
 
 
                     Log.v("Step3Activity","isSuccessful");
-                    List<CardIssuer> list = response.body();
+                    final List<CardIssuer> list = response.body();
 
-                    ListView listView = (ListView) context.findViewById(R.id.step3_listView);
-                    CardIssuerArrayAdapter adapter = new CardIssuerArrayAdapter (context, list);
+                    if(list.isEmpty()){
+                        //TODO: mandar a Step4 o si no hay banco no hay coutas??
+                        Toast.makeText(context,R.string.toast_no_card_issuers,Toast.LENGTH_SHORT).show();
+                    }else{
+                        ListView listView = (ListView) context.findViewById(R.id.step3_listView);
+                        CardIssuerArrayAdapter adapter = new CardIssuerArrayAdapter (context, list);
 
-                    adapter.notifyDataSetChanged();
+                        adapter.notifyDataSetChanged();
 
-                    listView.setAdapter(adapter);
+                        listView.setAdapter(adapter);
 
-                    /*
+
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -77,14 +83,19 @@ public class CardIssuersTask {
                             //TODO: validate max and min amount
                             String amount = context.getIntent().getStringExtra(StepsUtils.AMOUNT);
 
-                            Intent intent = new Intent(context, Step3Activity.class);
+
+                            Intent intent = new Intent(context, Step4Activity.class);
                             intent.putExtra(StepsUtils.AMOUNT,amount);
-                            intent.putExtra(StepsUtils.PAYMENT_METHOD_ID,list.get(position).getId());
+                            intent.putExtra(StepsUtils.PAYMENT_METHOD_ID,paymentMethodId);
+                            intent.putExtra(StepsUtils.CARD_ISSUER_ID,list.get(position).getId());
 
                             context.startActivityForResult(intent,StepsUtils.SELECTED_VALUES_REQUEST_CODE);
 
                         }
-                    });*/
+                    });
+
+
+                    }
 
 
 

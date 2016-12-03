@@ -11,4 +11,6 @@ public class StepsUtils {
 
     public static final String PAYMENT_TYPE = "credit_card";
     public static final  String PAYMENT_METHOD_ID = "payment_method_id";
+    public static final  String CARD_ISSUER_ID = "card_issuer_id";
+
 }

@@ -1,6 +1,7 @@
 package com.angiearlanti.mercadopago_ejercicio.service;
 
 import com.angiearlanti.mercadopago_ejercicio.model.CardIssuer;
+import com.angiearlanti.mercadopago_ejercicio.model.Installment;
 import com.angiearlanti.mercadopago_ejercicio.model.PaymentMethod;
 
 import java.util.List;
@@ -27,5 +28,13 @@ public interface MercadoPagoService {
 
     @GET("/v1/payment_methods/card_issuers")
     Call<List<CardIssuer>> getCardIssuers(@Query("public_key") String publicKey, @Query("payment_method_id") String paymentMethodId);
+
+
+    //https://api.mercadopago.com/v1/payment_methods/installments?public_key=PUBLIC_KEY&amount=MONTO_DEL_PASO_1&payment_method_id=MEDIO_DE_PAGO_SELECCIONADO&issuer.id=ISSUER_SELECCIONADO
+
+    @GET("/v1/payment_methods/installments")
+    Call<List<Installment>> getInstallments(@Query("public_key") String publicKey, @Query("amount") String mount , @Query("payment_method_id") String paymentMethodId, @Query("issuer.id") String issuerId);
+
+
 
 }
