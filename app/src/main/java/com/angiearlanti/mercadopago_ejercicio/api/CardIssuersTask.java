@@ -8,16 +8,15 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.angiearlanti.mercadopago_ejercicio.R;
-import com.angiearlanti.mercadopago_ejercicio.Step2Activity;
 import com.angiearlanti.mercadopago_ejercicio.Step3Activity;
+import com.angiearlanti.mercadopago_ejercicio.adapter.CardIssuerArrayAdapter;
 import com.angiearlanti.mercadopago_ejercicio.adapter.PaymentMethodArrayAdapter;
+import com.angiearlanti.mercadopago_ejercicio.model.CardIssuer;
 import com.angiearlanti.mercadopago_ejercicio.model.PaymentMethod;
 import com.angiearlanti.mercadopago_ejercicio.service.MercadoPagoService;
 import com.angiearlanti.mercadopago_ejercicio.utils.PaymentMethodsTaskUtils;
 import com.angiearlanti.mercadopago_ejercicio.utils.StepsUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -27,20 +26,18 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by Angie on 2/12/2016.
+ * Created by Angie on 3/12/2016.
  */
-
-
-    public class PaymentMethodsTask {
+public class CardIssuersTask {
 
     private Activity context;
 
-    public PaymentMethodsTask(final Activity context) {
+    public CardIssuersTask(final Activity context) {
         this.context = context;
     }
 
 
-    public void getPaymentMethods() {
+    public void getCardIssuers() {
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -50,24 +47,29 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
         MercadoPagoService service = retrofit.create(MercadoPagoService.class);
 
-        Call<List<PaymentMethod>> paymentMethods = service.getPaymentMethods(StepsUtils.PUBLIC_KEY);
+        String paymentMethodId = context.getIntent().getStringExtra(StepsUtils.PAYMENT_METHOD_ID);
 
-        paymentMethods.enqueue(new Callback<List<PaymentMethod>>() {
+        Log.v("Step3Activity-Intent",paymentMethodId);
+
+        Call<List<CardIssuer>> cardIssuers = service.getCardIssuers(StepsUtils.PUBLIC_KEY, paymentMethodId);
+
+        cardIssuers.enqueue(new Callback<List<CardIssuer>>() {
             @Override
-            public void onResponse(Call<List<PaymentMethod>> call, Response<List<PaymentMethod>> response) {
+            public void onResponse(Call<List<CardIssuer>> call, Response<List<CardIssuer>> response) {
                 if (response.isSuccessful()) {
 
 
+                    Log.v("Step3Activity","isSuccessful");
+                    List<CardIssuer> list = response.body();
 
-                    final List<PaymentMethod> list = PaymentMethodsTaskUtils.cleanTypes(response.body());
-
-                    ListView listView = (ListView) context.findViewById(R.id.step2_listView);
-                    PaymentMethodArrayAdapter adapter = new PaymentMethodArrayAdapter(context, list);
+                    ListView listView = (ListView) context.findViewById(R.id.step3_listView);
+                    CardIssuerArrayAdapter adapter = new CardIssuerArrayAdapter (context, list);
 
                     adapter.notifyDataSetChanged();
 
                     listView.setAdapter(adapter);
 
+                    /*
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -82,7 +84,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
                             context.startActivityForResult(intent,StepsUtils.SELECTED_VALUES_REQUEST_CODE);
 
                         }
-                    });
+                    });*/
 
 
 
@@ -95,8 +97,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
             }
 
             @Override
-            public void onFailure(Call<List<PaymentMethod>> call, Throwable t) {
-
+            public void onFailure(Call<List<CardIssuer>> call, Throwable t) {
+                Log.v("Step3Activity","onFailure");
                 t.printStackTrace();
             }
         });
@@ -104,6 +106,5 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
     }
 
-    }
 
-
+}

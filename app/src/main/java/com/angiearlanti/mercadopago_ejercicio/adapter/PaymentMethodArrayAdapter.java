@@ -43,7 +43,7 @@ public class PaymentMethodArrayAdapter extends ArrayAdapter<PaymentMethod> {
         LinearLayout layout = (LinearLayout) rowView.findViewById(R.id.step2_item_layout);
         PaymentMethod pm = objects.get(position);
 
-        if (pm.getPayment_type_id().equals(StepsUtils.PAYMENT_TYPE)){
+        //if (pm.getPayment_type_id().equals(StepsUtils.PAYMENT_TYPE)){
             String url = pm.getSecure_thumbnail();
 
             ImageView imageView = (ImageView) rowView.findViewById(R.id.step2_icon);
@@ -56,9 +56,10 @@ public class PaymentMethodArrayAdapter extends ArrayAdapter<PaymentMethod> {
             TextView nameTextView = (TextView)rowView.findViewById(R.id.step2_name);
             nameTextView.setText(pm.getName());
 
-        }else{
-            rowView = new Space(context);
-        }
+        //}else{
+          //  rowView = new Space(context);
+            //rowView.setVisibility(View.GONE);
+        //}
 
 
 
