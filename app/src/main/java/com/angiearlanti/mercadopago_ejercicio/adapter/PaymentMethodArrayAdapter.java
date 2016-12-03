@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.angiearlanti.mercadopago_ejercicio.R;
-import com.angiearlanti.mercadopago_ejercicio.async_task.DownloadImageAsyncTask;
 import com.angiearlanti.mercadopago_ejercicio.model.PaymentMethod;
 import com.squareup.picasso.Picasso;
 
@@ -40,12 +39,14 @@ public class PaymentMethodArrayAdapter extends ArrayAdapter<PaymentMethod> {
 
         PaymentMethod pm = objects.get(position);
 
-        String url = pm.getThumbnail();
+        String url = pm.getSecure_thumbnail();
 
         ImageView imageView = (ImageView) rowView.findViewById(R.id.step2_icon);
 
-        //new DownloadImageAsyncTask(imageView).execute(url);
-        Picasso.with(context).load(url).into(imageView);
+
+        Picasso.with(context)
+                .load(url)
+                .into(imageView);
 
         TextView nameTextView = (TextView)rowView.findViewById(R.id.step2_name);
         nameTextView.setText(pm.getName());

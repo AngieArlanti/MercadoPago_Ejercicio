@@ -1,7 +1,6 @@
-package com.angiearlanti.mercadopago_ejercicio.async_task;
+package com.angiearlanti.mercadopago_ejercicio.api;
 
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ListView;
 
@@ -24,11 +23,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 
-    public class PaymentMethodsAsyncTask {
+    public class PaymentMethodsTask {
 
     private Activity context;
 
-    public PaymentMethodsAsyncTask(final Activity context) {
+    public PaymentMethodsTask(final Activity context) {
         this.context = context;
     }
 
@@ -49,12 +48,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
             @Override
             public void onResponse(Call<List<PaymentMethod>> call, Response<List<PaymentMethod>> response) {
                 if (response.isSuccessful()) {
-                    Log.v("Step2Activity", "isSuccessful");
 
-                    //TODO publishProgress ir completando la lista
+
+
                     ListView listView = (ListView) context.findViewById(R.id.step2_listView);
                     PaymentMethodArrayAdapter adapter = new PaymentMethodArrayAdapter(context, response.body());
-
 
                     adapter.notifyDataSetChanged();
 
@@ -62,7 +60,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
                 } else {
                     //puedo tener 404 o 500
-                    Log.v("Step2Activity", "notSuccessful");
+
 
                 }
 
@@ -70,7 +68,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
             @Override
             public void onFailure(Call<List<PaymentMethod>> call, Throwable t) {
-                Log.v("Step2Activity", "onFailure");
+
                 t.printStackTrace();
             }
         });

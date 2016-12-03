@@ -1,29 +1,13 @@
 package com.angiearlanti.mercadopago_ejercicio;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import com.angiearlanti.mercadopago_ejercicio.adapter.PaymentMethodArrayAdapter;
-import com.angiearlanti.mercadopago_ejercicio.async_task.PaymentMethodsAsyncTask;
-import com.angiearlanti.mercadopago_ejercicio.model.PaymentMethod;
-import com.angiearlanti.mercadopago_ejercicio.service.MercadoPagoService;
-import com.angiearlanti.mercadopago_ejercicio.utils.StepsUtils;
-
-import org.w3c.dom.Text;
+import com.angiearlanti.mercadopago_ejercicio.api.PaymentMethodsTask;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Step2Activity extends AppCompatActivity {
 
@@ -41,14 +25,11 @@ public class Step2Activity extends AppCompatActivity {
 
         Intent selectedValuesIntent = getIntent();
 
-        //new PaymentMethodsAsyncTask(this).execute();
+        //new PaymentMethodsTask(this).execute();
 
-        PaymentMethodsAsyncTask pm = new PaymentMethodsAsyncTask(this);
+        PaymentMethodsTask pm = new PaymentMethodsTask(this);
 
         pm.getPaymentMethods();
-
-
-
     }
 
 
