@@ -1,9 +1,12 @@
 package com.angiearlanti.mercadopago_ejercicio.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Angie on 1/12/2016.
  */
-public class CardIssuer {
+public class CardIssuer implements Parcelable {
 
     private String id;
     private String name;
@@ -48,4 +51,38 @@ public class CardIssuer {
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(thumbnail);
+        dest.writeString(secure_thumbnail);
+    }
+
+
+    public static final Parcelable.Creator<CardIssuer> CREATOR
+            = new Parcelable.Creator<CardIssuer>() {
+        public CardIssuer createFromParcel(Parcel in) {
+            return new CardIssuer(in);
+        }
+
+        public CardIssuer[] newArray(int size) {
+            return new CardIssuer[size];
+        }
+    };
+
+    private CardIssuer(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        thumbnail = in.readString();
+        secure_thumbnail = in.readString();
+    }
 }
+
+

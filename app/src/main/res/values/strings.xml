@@ -2,4 +2,5 @@
     <string name="app_name">MercadoPago-Ejercicio</string>
     <string name="step1_hint_amount">Ingrese monto</string>
     <string name="step1_button_next">Siguiente</string>
+    <string name="toast_no_card_issuers">No hay Bancos para la tarjeta seleccionada</string>
 </resources>

@@ -73,13 +73,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                             //TODO: validate max and min amount
-                            String amount = context.getIntent().getStringExtra(StepsUtils.AMOUNT);
 
-                            Intent intent = new Intent(context, Step3Activity.class);
-                            intent.putExtra(StepsUtils.AMOUNT,amount);
-                            intent.putExtra(StepsUtils.PAYMENT_METHOD_ID,list.get(position).getId());
 
-                            context.startActivityForResult(intent,StepsUtils.SELECTED_VALUES_REQUEST_CODE);
+
+                            CardIssuersTask ci = new CardIssuersTask(context,list.get(position).getId());
+
+                            ci.getCardIssuers();
+
 
                         }
                     });

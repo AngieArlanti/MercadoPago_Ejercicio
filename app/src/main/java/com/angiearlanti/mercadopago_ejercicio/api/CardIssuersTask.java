@@ -1,22 +1,29 @@
 package com.angiearlanti.mercadopago_ejercicio.api;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.angiearlanti.mercadopago_ejercicio.R;
 import com.angiearlanti.mercadopago_ejercicio.Step3Activity;
 import com.angiearlanti.mercadopago_ejercicio.adapter.CardIssuerArrayAdapter;
 import com.angiearlanti.mercadopago_ejercicio.adapter.PaymentMethodArrayAdapter;
 import com.angiearlanti.mercadopago_ejercicio.model.CardIssuer;
+import com.angiearlanti.mercadopago_ejercicio.model.CardIssuersParcelable;
 import com.angiearlanti.mercadopago_ejercicio.model.PaymentMethod;
 import com.angiearlanti.mercadopago_ejercicio.service.MercadoPagoService;
 import com.angiearlanti.mercadopago_ejercicio.utils.PaymentMethodsTaskUtils;
 import com.angiearlanti.mercadopago_ejercicio.utils.StepsUtils;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -31,9 +38,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CardIssuersTask {
 
     private Activity context;
+    private String paymentMethodId;
 
-    public CardIssuersTask(final Activity context) {
+    public CardIssuersTask(final Activity context, final String paymentMethodId) {
         this.context = context;
+        this.paymentMethodId = paymentMethodId;
     }
 
 
@@ -47,10 +56,6 @@ public class CardIssuersTask {
 
         MercadoPagoService service = retrofit.create(MercadoPagoService.class);
 
-        String paymentMethodId = context.getIntent().getStringExtra(StepsUtils.PAYMENT_METHOD_ID);
-
-        Log.v("Step3Activity-Intent",paymentMethodId);
-
         Call<List<CardIssuer>> cardIssuers = service.getCardIssuers(StepsUtils.PUBLIC_KEY, paymentMethodId);
 
         cardIssuers.enqueue(new Callback<List<CardIssuer>>() {
@@ -59,32 +64,27 @@ public class CardIssuersTask {
                 if (response.isSuccessful()) {
 
 
-                    Log.v("Step3Activity","isSuccessful");
                     List<CardIssuer> list = response.body();
+                    String amount = context.getIntent().getStringExtra(StepsUtils.AMOUNT);
 
-                    ListView listView = (ListView) context.findViewById(R.id.step3_listView);
-                    CardIssuerArrayAdapter adapter = new CardIssuerArrayAdapter (context, list);
+                    CardIssuersParcelable cardIssuers = new CardIssuersParcelable((ArrayList<CardIssuer>) list);
 
-                    adapter.notifyDataSetChanged();
 
-                    listView.setAdapter(adapter);
 
-                    /*
-                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if(list.isEmpty()){
+                        //TODO Intent a Step4Installments o no hay installments si no hay banco?
+                        Toast.makeText(context,R.string.toast_no_card_issuers,Toast.LENGTH_SHORT).show();
+                    }else{
+                        Intent intent = new Intent(context, Step3Activity.class);
+                        intent.putExtra(StepsUtils.AMOUNT,amount);
+                        intent.putExtra(StepsUtils.PAYMENT_METHOD_ID,paymentMethodId);
+                        intent.putExtra(StepsUtils.CARD_ISSUERS,cardIssuers);
 
-                            //TODO: validate max and min amount
-                            String amount = context.getIntent().getStringExtra(StepsUtils.AMOUNT);
+                        context.startActivityForResult(intent,StepsUtils.SELECTED_VALUES_REQUEST_CODE);
+                    }
 
-                            Intent intent = new Intent(context, Step3Activity.class);
-                            intent.putExtra(StepsUtils.AMOUNT,amount);
-                            intent.putExtra(StepsUtils.PAYMENT_METHOD_ID,list.get(position).getId());
 
-                            context.startActivityForResult(intent,StepsUtils.SELECTED_VALUES_REQUEST_CODE);
 
-                        }
-                    });*/
 
 
 
