@@ -8,8 +8,11 @@ import com.angiearlanti.mercadopago_ejercicio.R;
 import com.angiearlanti.mercadopago_ejercicio.adapter.PaymentMethodArrayAdapter;
 import com.angiearlanti.mercadopago_ejercicio.model.PaymentMethod;
 import com.angiearlanti.mercadopago_ejercicio.service.MercadoPagoService;
+import com.angiearlanti.mercadopago_ejercicio.utils.PaymentMethodsTaskUtils;
 import com.angiearlanti.mercadopago_ejercicio.utils.StepsUtils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -50,6 +53,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
                 if (response.isSuccessful()) {
 
 
+                    //List<PaymentMethod> list = PaymentMethodsTaskUtils.cleanTypes(response.body());
 
                     ListView listView = (ListView) context.findViewById(R.id.step2_listView);
                     PaymentMethodArrayAdapter adapter = new PaymentMethodArrayAdapter(context, response.body());
@@ -57,6 +61,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
                     adapter.notifyDataSetChanged();
 
                     listView.setAdapter(adapter);
+
+
 
                 } else {
                     //puedo tener 404 o 500

@@ -4,10 +4,12 @@ import com.angiearlanti.mercadopago_ejercicio.model.CardIssuer;
 import com.angiearlanti.mercadopago_ejercicio.model.PaymentMethod;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 /**
  * Created by Angie on 1/12/2016.

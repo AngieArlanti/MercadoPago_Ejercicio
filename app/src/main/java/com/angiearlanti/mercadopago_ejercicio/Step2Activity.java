@@ -11,12 +11,6 @@ import java.util.List;
 
 public class Step2Activity extends AppCompatActivity {
 
-    // Set the supported payment method types
-    protected List<String> mSupportedPaymentTypes = new ArrayList<String>(){{
-        add("credit_card");
-    }};
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +18,6 @@ public class Step2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_step2);
 
         Intent selectedValuesIntent = getIntent();
-
-        //new PaymentMethodsTask(this).execute();
 
         PaymentMethodsTask pm = new PaymentMethodsTask(this);
 
