@@ -10,9 +10,9 @@ public class Installment {
     private String payment_method_id;
     private String payment_type_id;
     private CardIssuer issuer;
-    private List<PayerCosts> payer_costs;
+    private List<PayerCost> payer_costs;
 
-    public Installment(String payment_method_id, String payment_type_id, CardIssuer issuer, List<PayerCosts> payer_costs) {
+    public Installment(String payment_method_id, String payment_type_id, CardIssuer issuer, List<PayerCost> payer_costs) {
         this.payment_method_id = payment_method_id;
         this.payment_type_id = payment_type_id;
         this.issuer = issuer;
@@ -43,11 +43,11 @@ public class Installment {
         this.issuer = issuer;
     }
 
-    public List<PayerCosts> getPayer_costs() {
+    public List<PayerCost> getPayer_costs() {
         return payer_costs;
     }
 
-    public void setPayer_costs(List<PayerCosts> payer_costs) {
+    public void setPayer_costs(List<PayerCost> payer_costs) {
         this.payer_costs = payer_costs;
     }
 }

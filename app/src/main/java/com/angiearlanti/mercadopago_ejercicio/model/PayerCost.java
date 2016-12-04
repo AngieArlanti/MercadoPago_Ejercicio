@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Angie on 3/12/2016.
  */
-public class PayerCosts {
+public class PayerCost {
 
     private Number installments;
     private Number installment_rate;
@@ -16,7 +16,7 @@ public class PayerCosts {
     private Number installment_amount;
     private Number total_amount;
 
-    public PayerCosts(Number installments, Number installment_rate, List<String> labels, Number min_allowed_amount, Number max_allowed_amount, String recommended_message, Number installment_amount, Number total_amount) {
+    public PayerCost(Number installments, Number installment_rate, List<String> labels, Number min_allowed_amount, Number max_allowed_amount, String recommended_message, Number installment_amount, Number total_amount) {
         this.installments = installments;
         this.installment_rate = installment_rate;
         this.labels = labels;

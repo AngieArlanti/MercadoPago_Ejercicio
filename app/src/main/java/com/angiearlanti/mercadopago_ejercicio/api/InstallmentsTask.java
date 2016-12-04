@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.angiearlanti.mercadopago_ejercicio.R;
 import com.angiearlanti.mercadopago_ejercicio.Step4Activity;
 import com.angiearlanti.mercadopago_ejercicio.adapter.CardIssuerArrayAdapter;
+import com.angiearlanti.mercadopago_ejercicio.adapter.PayerCostsArrayAdapter;
 import com.angiearlanti.mercadopago_ejercicio.model.CardIssuer;
 import com.angiearlanti.mercadopago_ejercicio.model.Installment;
 import com.angiearlanti.mercadopago_ejercicio.service.MercadoPagoService;
@@ -64,13 +65,25 @@ public class InstallmentsTask {
             public void onResponse(Call<List<Installment>> call, Response<List<Installment>> response) {
                 if (response.isSuccessful()) {
 
-                    Log.v("Step4","isSuccessful");
+
 
                     final List<Installment> list = response.body();
 
-                    TextView textView = (TextView) context.findViewById(R.id.step4_textView);
-                    textView.setText(list.get(0).getPayer_costs().get(0).getRecommended_message());
+                    Installment installment = list.get(0);
 
+                    ListView listView = (ListView) context.findViewById(R.id.step4_listView);
+
+                    PayerCostsArrayAdapter adapter = new PayerCostsArrayAdapter(context,installment.getPayer_costs());
+
+                    adapter.notifyDataSetChanged();
+
+                    listView.setAdapter(adapter);
+
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        }
+                    });
 
 
                 } else {
