@@ -78,8 +78,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
                             Intent intent = new Intent(context, Step3Activity.class);
                             intent.putExtra(StepsUtils.AMOUNT,amount);
                             intent.putExtra(StepsUtils.PAYMENT_METHOD_ID,list.get(position).getId());
+                            intent.putExtra(StepsUtils.PAYMENT_METHOD_NAME,list.get(position).getName());
 
-                            context.startActivityForResult(intent,StepsUtils.SELECTED_VALUES_REQUEST_CODE);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+                            context.startActivity(intent);
+                            context.finish();
+
 
                         }
                     });

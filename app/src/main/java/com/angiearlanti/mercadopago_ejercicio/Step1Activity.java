@@ -1,11 +1,17 @@
 package com.angiearlanti.mercadopago_ejercicio;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.angiearlanti.mercadopago_ejercicio.utils.StepsUtils;
 
@@ -33,6 +39,13 @@ public class Step1Activity extends AppCompatActivity {
 
                 startActivityForResult(intent,StepsUtils.SELECTED_VALUES_REQUEST_CODE);
 
+
+                /*Activity A -> startActivityForResult(activityB,0);
+                            Activity B -> activityCintent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT); startActivity(activityCintent); finish();
+                            Activity C -> activityDintent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT); startActivity(activityDintent); finish();
+                            Activity D -> setresult(10); finish();
+                            Activity A -> if(result==10) {dofunction(); } YEPPP*/
+
             }
         });
 
@@ -46,7 +59,34 @@ public class Step1Activity extends AppCompatActivity {
         if (requestCode == StepsUtils.SELECTED_VALUES_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
 
-                //TODO: show alert with selected values in next steps
+                LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View dialogLayout = inflater.inflate(R.layout.dialog, null);
+
+
+                TextView amount = (TextView) dialogLayout.findViewById(R.id.dialog_textView_amount);
+                TextView bank = (TextView) dialogLayout.findViewById(R.id.dialog_textView_bank);
+                TextView paymentMethod = (TextView) dialogLayout.findViewById(R.id.dialog_textView_payment_method);
+                TextView installments = (TextView) dialogLayout.findViewById(R.id.dialog_textView_installments);
+
+                String stringAmount =getResources().getString(R.string.currency)+" "+data.getStringExtra(StepsUtils.AMOUNT);
+                amount.setText(stringAmount);
+                bank.setText(data.getStringExtra(StepsUtils.CARD_ISSUER_NAME));
+                paymentMethod.setText(data.getStringExtra(StepsUtils.PAYMENT_METHOD_NAME));
+                installments.setText(data.getStringExtra(StepsUtils.RECOMMENDED_MESSAGE));
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.dialog_title)
+                .setView(dialogLayout);
+
+                builder.setPositiveButton(R.string.dialog_button_ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        EditText editText= (EditText) Step1Activity.this.findViewById(R.id.step1_editText);
+                        editText.getText().clear();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         }
     }

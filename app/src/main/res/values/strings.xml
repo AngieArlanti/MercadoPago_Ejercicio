@@ -2,5 +2,13 @@
     <string name="app_name">MercadoPago-Ejercicio</string>
     <string name="step1_hint_amount">Ingrese monto</string>
     <string name="step1_button_next">Siguiente</string>
-    <string name="toast_no_card_issuers">No hay Bancos para la tarjeta seleccionada</string>
+    <string name="no_card_issuers">No hay bancos para su selección</string>
+    <string name="dialog_payment_method">Tarjeta: </string>
+    <string name="dialog_amount">Monto: </string>
+    <string name="dialog_bank">Banco: </string>
+    <string name="dialog_installments">Cuotas: </string>
+    <string name="dialog_title">Verifique su Selección</string>
+    <string name="dialog_button_ok">Confirmar</string>
+    <string name="currency">$ </string>
+    <string name="no_installments">No hay cuotas disponibles</string>
 </resources>

@@ -12,5 +12,8 @@ public class StepsUtils {
     public static final String PAYMENT_TYPE = "credit_card";
     public static final  String PAYMENT_METHOD_ID = "payment_method_id";
     public static final  String CARD_ISSUER_ID = "card_issuer_id";
+    public static final String RECOMMENDED_MESSAGE = "recommended_message";
 
+    public static final String CARD_ISSUER_NAME =  "card_issuer_name";
+    public static final String PAYMENT_METHOD_NAME = "payment_method_name";
 }

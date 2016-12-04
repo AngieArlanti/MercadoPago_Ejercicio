@@ -49,9 +49,12 @@ public class CardIssuersTask {
 
         MercadoPagoService service = retrofit.create(MercadoPagoService.class);
 
-        final String paymentMethodId = context.getIntent().getStringExtra(StepsUtils.PAYMENT_METHOD_ID);
+        final Intent intent = context.getIntent();
+        final String paymentMethodId = intent.getStringExtra(StepsUtils.PAYMENT_METHOD_ID);
+        final String amount = context.getIntent().getStringExtra(StepsUtils.AMOUNT);
+        final String paymentMethodName = intent.getStringExtra(StepsUtils.PAYMENT_METHOD_NAME);
 
-        Log.v("Step3Activity-Intent",paymentMethodId);
+
 
         Call<List<CardIssuer>> cardIssuers = service.getCardIssuers(StepsUtils.PUBLIC_KEY, paymentMethodId);
 
@@ -61,12 +64,15 @@ public class CardIssuersTask {
                 if (response.isSuccessful()) {
 
 
-                    Log.v("Step3Activity","isSuccessful");
+
                     final List<CardIssuer> list = response.body();
 
                     if(list.isEmpty()){
-                        //TODO: mandar a Step4 o si no hay banco no hay coutas??
-                        Toast.makeText(context,R.string.toast_no_card_issuers,Toast.LENGTH_SHORT).show();
+
+                        intent.putExtra(StepsUtils.CARD_ISSUER_NAME,context.getResources().getString(R.string.no_card_issuers));
+                        intent.putExtra(StepsUtils.RECOMMENDED_MESSAGE,context.getResources().getString(R.string.no_installments));
+                        context.setResult(context.RESULT_OK, intent);
+                        context.finish();
                     }else{
                         ListView listView = (ListView) context.findViewById(R.id.step3_listView);
                         CardIssuerArrayAdapter adapter = new CardIssuerArrayAdapter (context, list);
@@ -81,15 +87,17 @@ public class CardIssuersTask {
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                             //TODO: validate max and min amount
-                            String amount = context.getIntent().getStringExtra(StepsUtils.AMOUNT);
 
+                            Intent i = new Intent(context, Step4Activity.class);
+                            i.putExtra(StepsUtils.AMOUNT,amount);
+                            i.putExtra(StepsUtils.PAYMENT_METHOD_ID,paymentMethodId);
+                            i.putExtra(StepsUtils.PAYMENT_METHOD_NAME,paymentMethodName);
+                            i.putExtra(StepsUtils.CARD_ISSUER_ID,list.get(position).getId());
+                            i.putExtra(StepsUtils.CARD_ISSUER_NAME,list.get(position).getName());
 
-                            Intent intent = new Intent(context, Step4Activity.class);
-                            intent.putExtra(StepsUtils.AMOUNT,amount);
-                            intent.putExtra(StepsUtils.PAYMENT_METHOD_ID,paymentMethodId);
-                            intent.putExtra(StepsUtils.CARD_ISSUER_ID,list.get(position).getId());
-
-                            context.startActivityForResult(intent,StepsUtils.SELECTED_VALUES_REQUEST_CODE);
+                            i.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+                            context.startActivity(i);
+                            context.finish();
 
                         }
                     });

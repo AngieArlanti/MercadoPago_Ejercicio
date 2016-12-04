@@ -15,6 +15,7 @@ import com.angiearlanti.mercadopago_ejercicio.adapter.CardIssuerArrayAdapter;
 import com.angiearlanti.mercadopago_ejercicio.adapter.PayerCostsArrayAdapter;
 import com.angiearlanti.mercadopago_ejercicio.model.CardIssuer;
 import com.angiearlanti.mercadopago_ejercicio.model.Installment;
+import com.angiearlanti.mercadopago_ejercicio.model.PayerCost;
 import com.angiearlanti.mercadopago_ejercicio.service.MercadoPagoService;
 import com.angiearlanti.mercadopago_ejercicio.utils.StepsUtils;
 
@@ -51,7 +52,7 @@ public class InstallmentsTask {
 
         MercadoPagoService service = retrofit.create(MercadoPagoService.class);
 
-        Intent intent = context.getIntent();
+        final Intent intent = context.getIntent();
         String paymentMethodId = intent.getStringExtra(StepsUtils.PAYMENT_METHOD_ID);
         String cardIssuerId= intent.getStringExtra(StepsUtils.CARD_ISSUER_ID);
         String amount = intent.getStringExtra(StepsUtils.AMOUNT);
@@ -69,21 +70,39 @@ public class InstallmentsTask {
 
                     final List<Installment> list = response.body();
 
-                    Installment installment = list.get(0);
+                    if(list.size()!=0) {
+                        final Installment installment = list.get(0);
 
-                    ListView listView = (ListView) context.findViewById(R.id.step4_listView);
+                        final List<PayerCost> payerCosts = installment.getPayer_costs();
 
-                    PayerCostsArrayAdapter adapter = new PayerCostsArrayAdapter(context,installment.getPayer_costs());
+                        ListView listView = (ListView) context.findViewById(R.id.step4_listView);
 
-                    adapter.notifyDataSetChanged();
+                        PayerCostsArrayAdapter adapter = new PayerCostsArrayAdapter(context, payerCosts);
 
-                    listView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
 
-                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        }
-                    });
+                        listView.setAdapter(adapter);
+
+                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                intent.putExtra(StepsUtils.RECOMMENDED_MESSAGE, payerCosts.get(position).getRecommended_message());
+                                context.setResult(context.RESULT_OK, intent);
+                                context.finish();
+
+                            }
+                        });
+
+                    }else{
+                        //TODO: lo mismo que con bank null
+
+                        intent.putExtra(StepsUtils.CARD_ISSUER_NAME,context.getResources().getString(R.string.no_card_issuers));
+                        intent.putExtra(StepsUtils.RECOMMENDED_MESSAGE,context.getResources().getString(R.string.no_installments));
+                        context.setResult(context.RESULT_OK, intent);
+                        context.finish();
+                    }
+
+
 
 
                 } else {

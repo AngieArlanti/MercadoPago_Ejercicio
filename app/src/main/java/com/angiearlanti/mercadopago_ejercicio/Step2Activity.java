@@ -28,16 +28,4 @@ public class Step2Activity extends AppCompatActivity {
     }
 
 
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode == StepsUtils.SELECTED_VALUES_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-
-
-            }
-        }
-    }
-
 }

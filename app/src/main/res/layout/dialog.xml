@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:stretchColumns="1"
+    android:id="@+id/dialog"
+    android:layout_marginLeft="@dimen/activity_left_margin">
+    <TableRow>
+        <TextView
+            android:text="@string/dialog_amount"
+            android:padding="3dip"
+            android:textStyle="bold"
+            android:textSize="@dimen/activity_text_size"/>
+
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+        android:id="@+id/dialog_textView_amount"
+        android:padding="3dip"
+        android:textSize="@dimen/activity_text_size"/>
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:text="@string/dialog_payment_method"
+            android:padding="3dip"
+            android:textStyle="bold"
+            android:textSize="@dimen/activity_text_size"/>
+
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:id="@+id/dialog_textView_payment_method"
+            android:padding="3dip"
+            android:textSize="@dimen/activity_text_size"/>
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:text="@string/dialog_bank"
+            android:padding="3dip"
+            android:textStyle="bold"
+            android:textSize="@dimen/activity_text_size"/>
+
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:id="@+id/dialog_textView_bank"
+            android:padding="3dip"
+            android:textSize="@dimen/activity_text_size"/>
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:text="@string/dialog_installments"
+            android:padding="3dip"
+            android:textStyle="bold"
+            android:textSize="@dimen/activity_text_size"/>
+
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            android:id="@+id/dialog_textView_installments"
+            android:padding="3dip"
+            android:textSize="@dimen/activity_text_size"/>
+    </TableRow>
+</TableLayout>
