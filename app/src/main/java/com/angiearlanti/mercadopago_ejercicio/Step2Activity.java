@@ -1,17 +1,9 @@
 package com.angiearlanti.mercadopago_ejercicio;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
-import com.angiearlanti.mercadopago_ejercicio.api.PaymentMethodsTask;
-import com.angiearlanti.mercadopago_ejercicio.utils.StepsUtils;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.angiearlanti.mercadopago_ejercicio.apicalls.PaymentMethodsTask;
 
 public class Step2Activity extends AppCompatActivity {
 

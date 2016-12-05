@@ -56,22 +56,17 @@ public class Step1Activity extends AppCompatActivity {
         if (requestCode == StepsUtils.SELECTED_VALUES_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
 
-                View dialogLayout = StepsUtils.getDialogLayout(this,data);
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle(R.string.dialog_title)
-                .setView(dialogLayout);
-
-                builder.setPositiveButton(R.string.dialog_button_ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        EditText editText= (EditText) Step1Activity.this.findViewById(R.id.step1_editText);
-                        editText.getText().clear();
-                    }
-                });
-
-                AlertDialog dialog = builder.create();
+                AlertDialog dialog = StepsUtils.getOkDialog(this,data);
                 dialog.show();
+
+            }else if(resultCode==RESULT_CANCELED){
+
+                AlertDialog dialog = StepsUtils.getErrorDialog(this,data);
+                dialog.show();
+
             }
+
+
         }
     }
 

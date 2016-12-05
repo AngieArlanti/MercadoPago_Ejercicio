@@ -1,4 +1,4 @@
-package com.angiearlanti.mercadopago_ejercicio.api;
+package com.angiearlanti.mercadopago_ejercicio.apicalls;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,27 +6,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.angiearlanti.mercadopago_ejercicio.R;
-import com.angiearlanti.mercadopago_ejercicio.Step3Activity;
 import com.angiearlanti.mercadopago_ejercicio.Step4Activity;
 import com.angiearlanti.mercadopago_ejercicio.adapter.CardIssuerArrayAdapter;
-import com.angiearlanti.mercadopago_ejercicio.adapter.PaymentMethodArrayAdapter;
 import com.angiearlanti.mercadopago_ejercicio.model.CardIssuer;
-import com.angiearlanti.mercadopago_ejercicio.model.PaymentMethod;
 import com.angiearlanti.mercadopago_ejercicio.service.MercadoPagoService;
 import com.angiearlanti.mercadopago_ejercicio.utils.ApiUtils;
-import com.angiearlanti.mercadopago_ejercicio.utils.PaymentMethodsTaskUtils;
 import com.angiearlanti.mercadopago_ejercicio.utils.StepsUtils;
+import com.angiearlanti.mercadopago_ejercicio.utils.TaskUtils;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Angie on 3/12/2016.
@@ -82,18 +76,18 @@ public class CardIssuersTask {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                            //TODO: validate max and min amount
 
-                            Intent i = new Intent(context, Step4Activity.class);
-                            i.putExtra(StepsUtils.AMOUNT,amount);
-                            i.putExtra(StepsUtils.PAYMENT_METHOD_ID,paymentMethodId);
-                            i.putExtra(StepsUtils.PAYMENT_METHOD_NAME,paymentMethodName);
-                            i.putExtra(StepsUtils.CARD_ISSUER_ID,list.get(position).getId());
-                            i.putExtra(StepsUtils.CARD_ISSUER_NAME,list.get(position).getName());
+                                Intent i = new Intent(context, Step4Activity.class);
+                                i.putExtra(StepsUtils.AMOUNT, amount);
+                                i.putExtra(StepsUtils.PAYMENT_METHOD_ID, paymentMethodId);
+                                i.putExtra(StepsUtils.PAYMENT_METHOD_NAME, paymentMethodName);
+                                i.putExtra(StepsUtils.CARD_ISSUER_ID, list.get(position).getId());
+                                i.putExtra(StepsUtils.CARD_ISSUER_NAME, list.get(position).getName());
 
-                            i.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
-                            context.startActivity(i);
-                            context.finish();
+                                i.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+                                context.startActivity(i);
+                                context.finish();
+
 
                         }
                     });

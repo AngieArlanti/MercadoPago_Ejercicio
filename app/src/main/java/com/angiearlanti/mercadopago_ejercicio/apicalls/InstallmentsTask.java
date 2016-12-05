@@ -1,4 +1,4 @@
-package com.angiearlanti.mercadopago_ejercicio.api;
+package com.angiearlanti.mercadopago_ejercicio.apicalls;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,29 +6,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.angiearlanti.mercadopago_ejercicio.R;
-import com.angiearlanti.mercadopago_ejercicio.Step4Activity;
-import com.angiearlanti.mercadopago_ejercicio.adapter.CardIssuerArrayAdapter;
 import com.angiearlanti.mercadopago_ejercicio.adapter.PayerCostsArrayAdapter;
-import com.angiearlanti.mercadopago_ejercicio.model.CardIssuer;
 import com.angiearlanti.mercadopago_ejercicio.model.Installment;
 import com.angiearlanti.mercadopago_ejercicio.model.PayerCost;
 import com.angiearlanti.mercadopago_ejercicio.service.MercadoPagoService;
 import com.angiearlanti.mercadopago_ejercicio.utils.ApiUtils;
 import com.angiearlanti.mercadopago_ejercicio.utils.StepsUtils;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Angie on 3/12/2016.
@@ -90,7 +81,7 @@ public class InstallmentsTask {
                         });
 
                     }else{
-                        //TODO: lo mismo que con bank null
+
 
                         intent.putExtra(StepsUtils.CARD_ISSUER_NAME,context.getResources().getString(R.string.no_card_issuers));
                         intent.putExtra(StepsUtils.RECOMMENDED_MESSAGE,context.getResources().getString(R.string.no_installments));

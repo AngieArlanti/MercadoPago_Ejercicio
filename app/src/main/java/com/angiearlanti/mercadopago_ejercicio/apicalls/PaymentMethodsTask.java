@@ -1,31 +1,25 @@
-package com.angiearlanti.mercadopago_ejercicio.api;
+package com.angiearlanti.mercadopago_ejercicio.apicalls;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.angiearlanti.mercadopago_ejercicio.R;
-import com.angiearlanti.mercadopago_ejercicio.Step2Activity;
 import com.angiearlanti.mercadopago_ejercicio.Step3Activity;
 import com.angiearlanti.mercadopago_ejercicio.adapter.PaymentMethodArrayAdapter;
 import com.angiearlanti.mercadopago_ejercicio.model.PaymentMethod;
 import com.angiearlanti.mercadopago_ejercicio.service.MercadoPagoService;
 import com.angiearlanti.mercadopago_ejercicio.utils.ApiUtils;
-import com.angiearlanti.mercadopago_ejercicio.utils.PaymentMethodsTaskUtils;
+import com.angiearlanti.mercadopago_ejercicio.utils.TaskUtils;
 import com.angiearlanti.mercadopago_ejercicio.utils.StepsUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Angie on 2/12/2016.
@@ -56,7 +50,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 
-                    final List<PaymentMethod> list = PaymentMethodsTaskUtils.cleanTypes(response.body());
+                    final List<PaymentMethod> list = TaskUtils.cleanTypes(response.body());
 
                     ListView listView = (ListView) context.findViewById(R.id.step2_listView);
                     PaymentMethodArrayAdapter adapter = new PaymentMethodArrayAdapter(context, list);
@@ -69,17 +63,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                            //TODO: validate max and min amount
                             String amount = context.getIntent().getStringExtra(StepsUtils.AMOUNT);
 
-                            Intent intent = new Intent(context, Step3Activity.class);
-                            intent.putExtra(StepsUtils.AMOUNT,amount);
-                            intent.putExtra(StepsUtils.PAYMENT_METHOD_ID,list.get(position).getId());
-                            intent.putExtra(StepsUtils.PAYMENT_METHOD_NAME,list.get(position).getName());
+                            Number max = list.get(position).getMax_allowed_amount();
+                            Number min = list.get(position).getMin_allowed_amount();
 
-                            intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
-                            context.startActivity(intent);
-                            context.finish();
+                            if (TaskUtils.checkPaymentMethodAmount(context,amount,min,max)){
+                                Intent intent = new Intent(context, Step3Activity.class);
+                                intent.putExtra(StepsUtils.AMOUNT,amount);
+                                intent.putExtra(StepsUtils.PAYMENT_METHOD_ID,list.get(position).getId());
+                                intent.putExtra(StepsUtils.PAYMENT_METHOD_NAME,list.get(position).getName());
+
+                                intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+                                context.startActivity(intent);
+                                context.finish();
+                            }
+
 
 
                         }

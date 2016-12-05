@@ -7,12 +7,14 @@
     <string name="dialog_amount">Monto: </string>
     <string name="dialog_bank">Banco: </string>
     <string name="dialog_installments">Cuotas: </string>
-    <string name="dialog_title">Verifique su Selección</string>
-    <string name="dialog_button_ok">Confirmar</string>
+    <string name="dialog_title">Confirme Selección</string>
+    <string name="dialog_button_ok">Ok</string>
     <string name="currency">$ </string>
     <string name="no_installments">No hay cuotas disponibles</string>
     <string name="step2_title">Seleccione Tajeta</string>
     <string name="step3_title">Seleccione Banco</string>
     <string name="step4_title">Seleccione Cuotas</string>
     <string name="step1_title">Ejercicio Mercado Pago</string>
+    <string name="error_message_payment_amount">La tarjeta seleccionada no acepta el monto ingresado.</string>
+    <string name="error_title_invalid_input">Verifique sus Datos</string>
 </resources>
