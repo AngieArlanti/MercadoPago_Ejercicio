@@ -20,6 +20,7 @@ public class Step2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step2);
+        setTitle(R.string.step2_title);
 
         PaymentMethodsTask pm = new PaymentMethodsTask(this);
 

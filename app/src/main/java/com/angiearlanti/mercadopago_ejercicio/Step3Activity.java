@@ -12,6 +12,7 @@ public class Step3Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step3);
+        setTitle(R.string.step3_title);
 
         CardIssuersTask ci = new CardIssuersTask(this);
 

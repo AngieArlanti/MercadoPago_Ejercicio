@@ -12,6 +12,7 @@ public class Step4Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step4);
+        setTitle(R.string.step4_title);
 
         InstallmentsTask it = new InstallmentsTask(this);
 

@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.angiearlanti.mercadopago_ejercicio.utils.StepsUtils;
 
+import java.util.Locale;
+
 public class Step1Activity extends AppCompatActivity {
 
 
@@ -22,6 +24,8 @@ public class Step1Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step1);
+
+        setTitle(R.string.step1_title);
 
         final Button button = (Button) findViewById(R.id.step1_next_button);
         final EditText editText = (EditText) findViewById(R.id.step1_editText);
@@ -38,13 +42,6 @@ public class Step1Activity extends AppCompatActivity {
                 intent.putExtra(StepsUtils.AMOUNT,amount);
 
                 startActivityForResult(intent,StepsUtils.SELECTED_VALUES_REQUEST_CODE);
-
-
-                /*Activity A -> startActivityForResult(activityB,0);
-                            Activity B -> activityCintent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT); startActivity(activityCintent); finish();
-                            Activity C -> activityDintent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT); startActivity(activityDintent); finish();
-                            Activity D -> setresult(10); finish();
-                            Activity A -> if(result==10) {dofunction(); } YEPPP*/
 
             }
         });
