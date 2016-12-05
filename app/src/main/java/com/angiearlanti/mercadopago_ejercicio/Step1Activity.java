@@ -60,9 +60,11 @@ public class Step1Activity extends AppCompatActivity {
                 dialog.show();
 
             }else if(resultCode==RESULT_CANCELED){
+                if(data!=null){
+                    AlertDialog dialog = StepsUtils.getErrorDialog(this,data);
+                    dialog.show();
 
-                AlertDialog dialog = StepsUtils.getErrorDialog(this,data);
-                dialog.show();
+                }
 
             }
 

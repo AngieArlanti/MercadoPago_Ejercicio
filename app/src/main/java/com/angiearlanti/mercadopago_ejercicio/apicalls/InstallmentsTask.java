@@ -82,7 +82,6 @@ public class InstallmentsTask {
 
                     }else{
 
-
                         intent.putExtra(StepsUtils.CARD_ISSUER_NAME,context.getResources().getString(R.string.no_card_issuers));
                         intent.putExtra(StepsUtils.RECOMMENDED_MESSAGE,context.getResources().getString(R.string.no_installments));
                         context.setResult(context.RESULT_OK, intent);
