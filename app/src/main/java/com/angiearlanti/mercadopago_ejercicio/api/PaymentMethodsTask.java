@@ -13,6 +13,7 @@ import com.angiearlanti.mercadopago_ejercicio.Step3Activity;
 import com.angiearlanti.mercadopago_ejercicio.adapter.PaymentMethodArrayAdapter;
 import com.angiearlanti.mercadopago_ejercicio.model.PaymentMethod;
 import com.angiearlanti.mercadopago_ejercicio.service.MercadoPagoService;
+import com.angiearlanti.mercadopago_ejercicio.utils.ApiUtils;
 import com.angiearlanti.mercadopago_ejercicio.utils.PaymentMethodsTaskUtils;
 import com.angiearlanti.mercadopago_ejercicio.utils.StepsUtils;
 
@@ -42,15 +43,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
     public void getPaymentMethods() {
 
+        MercadoPagoService service = ApiUtils.getService(ApiUtils.BASE_URL,MercadoPagoService.class);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.mercadopago.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        MercadoPagoService service = retrofit.create(MercadoPagoService.class);
 
-        Call<List<PaymentMethod>> paymentMethods = service.getPaymentMethods(StepsUtils.PUBLIC_KEY);
+        Call<List<PaymentMethod>> paymentMethods = service.getPaymentMethods(ApiUtils.PUBLIC_KEY);
 
         paymentMethods.enqueue(new Callback<List<PaymentMethod>>() {
             @Override

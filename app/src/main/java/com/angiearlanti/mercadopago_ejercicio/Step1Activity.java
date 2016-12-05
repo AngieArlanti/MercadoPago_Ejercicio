@@ -56,20 +56,7 @@ public class Step1Activity extends AppCompatActivity {
         if (requestCode == StepsUtils.SELECTED_VALUES_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
 
-                LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View dialogLayout = inflater.inflate(R.layout.dialog, null);
-
-
-                TextView amount = (TextView) dialogLayout.findViewById(R.id.dialog_textView_amount);
-                TextView bank = (TextView) dialogLayout.findViewById(R.id.dialog_textView_bank);
-                TextView paymentMethod = (TextView) dialogLayout.findViewById(R.id.dialog_textView_payment_method);
-                TextView installments = (TextView) dialogLayout.findViewById(R.id.dialog_textView_installments);
-
-                String stringAmount =getResources().getString(R.string.currency)+" "+data.getStringExtra(StepsUtils.AMOUNT);
-                amount.setText(stringAmount);
-                bank.setText(data.getStringExtra(StepsUtils.CARD_ISSUER_NAME));
-                paymentMethod.setText(data.getStringExtra(StepsUtils.PAYMENT_METHOD_NAME));
-                installments.setText(data.getStringExtra(StepsUtils.RECOMMENDED_MESSAGE));
+                View dialogLayout = StepsUtils.getDialogLayout(this,data);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(R.string.dialog_title)

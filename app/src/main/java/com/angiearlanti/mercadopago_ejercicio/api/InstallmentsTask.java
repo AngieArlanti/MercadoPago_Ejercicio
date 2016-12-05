@@ -17,6 +17,7 @@ import com.angiearlanti.mercadopago_ejercicio.model.CardIssuer;
 import com.angiearlanti.mercadopago_ejercicio.model.Installment;
 import com.angiearlanti.mercadopago_ejercicio.model.PayerCost;
 import com.angiearlanti.mercadopago_ejercicio.service.MercadoPagoService;
+import com.angiearlanti.mercadopago_ejercicio.utils.ApiUtils;
 import com.angiearlanti.mercadopago_ejercicio.utils.StepsUtils;
 
 import org.w3c.dom.Text;
@@ -45,12 +46,7 @@ public class InstallmentsTask {
     public void getRecommendedMessage() {
 
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.mercadopago.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        MercadoPagoService service = retrofit.create(MercadoPagoService.class);
+        MercadoPagoService service = ApiUtils.getService(ApiUtils.BASE_URL,MercadoPagoService.class);
 
         final Intent intent = context.getIntent();
         String paymentMethodId = intent.getStringExtra(StepsUtils.PAYMENT_METHOD_ID);
@@ -59,7 +55,7 @@ public class InstallmentsTask {
 
 
 
-        Call<List<Installment>> cardIssuers = service.getInstallments(StepsUtils.PUBLIC_KEY, amount,paymentMethodId,cardIssuerId);
+        Call<List<Installment>> cardIssuers = service.getInstallments(ApiUtils.PUBLIC_KEY, amount,paymentMethodId,cardIssuerId);
 
         cardIssuers.enqueue(new Callback<List<Installment>>() {
             @Override
